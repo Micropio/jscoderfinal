@@ -6,21 +6,19 @@ class Servicio {
         this.ubicacion = ubicacion;
         this.vehiculo = vehiculo;
         this.distancia = distancia;
-        
+
     }
 }
 
-//Variables
 let storageCliente;
 let miformulario = document.querySelector("#formulario");
 
-//Listeners
 
 document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem("nombre")) {
         cargarTabla();
     }
-} )
+})
 
 miformulario.addEventListener("submit", validarFormulario,);
 $('#submit').on('click', guardar);
@@ -34,37 +32,33 @@ function guardar() {
 
     localStorage.setItem("nombre", nombre);
     localStorage.setItem("apellido", apellido);
-    localStorage.setItem("email", email); 
+    localStorage.setItem("email", email);
 }
 
-//Solcitamos el tipo de vehiculo
 function tipoVehiculo() {
     let vehiculo = document.querySelector("#vehiculo").value;
-        switch(vehiculo){
-            case "moto":
-                return 2000;
-            case "auto":
-                return 4000;
-            case "camioneta":
-                return 5000;
-            default : 2000; 
-        }
+    switch (vehiculo) {
+        case "moto":
+            return 2000;
+        case "auto":
+            return 4000;
+        case "camioneta":
+            return 5000;
+        default: 2000;
+    }
 }
 
-//Solicitamos la distacia a la que lo va a trasladar
 
 function distanciaDeTraslado() {
     let distancia = document.querySelector("#distancia").value;;
-        for (let i = 1; i >=15; i++);{
-            return resultado = distancia * 20;
-        }
+    for (let i = 1; i >= 15; i++); {
+        return resultado = distancia * 20;
+    }
 }
-
-//Solicitamos su ubicacion aproximada para calcular el tiempo de espera.
 
 function demoraDelServicio() {
     let ubicacion = document.querySelector("#ubicacion").value;
-    switch(ubicacion){
+    switch (ubicacion) {
         case "Caba":
             return "menor a 2hs";
         case "Mas lejos":
@@ -72,15 +66,15 @@ function demoraDelServicio() {
     }
 }
 
-//validamos el formulario
+
 
 function validarFormulario(e) {
-    //cancelamos el comportamiento del evento
+
     e.preventDefault();
-    //obtenemos el elemento desde el cual se disparo el evento
+
     let miformulario = e.target
 
-    const nombre = document.querySelector("#nombre").value; 
+    const nombre = document.querySelector("#nombre").value;
     const apellido = document.querySelector("#apellido").value;
     const email = document.querySelector("#email").value;
     const costoDelTraslado = tipoVehiculo() + distanciaDeTraslado();
@@ -96,34 +90,34 @@ function validarFormulario(e) {
     miformulario.reset();
 
     $('#submit').on('click', aplicarEstilo());
-    
+
     function aplicarEstilo() {
-        document.getElementById("vent").style.display="block"
-        
+        document.getElementById("vent").style.display = "block"
+
     };
 
 
 }
 
-//imprimimos el mensaje
+
 
 
 
 function imprimir() {
 
 
- 
+
     let costoDelTraslado = tipoVehiculo() + distanciaDeTraslado();
     let tiempoDeEspera = demoraDelServicio();
 
-    const nuevoDiv = document.createElement ("div");
+    const nuevoDiv = document.createElement("div");
 
     nuevoDiv.classList.add("item");
     nuevoDiv.setAttribute("class", "ventana");
 
     const h1 = document.createElement("h1");
     h1.textContent = `Hola ${nombre.value}, tu tiempo de espera sera ${tiempoDeEspera} y el costo total es de $${costoDelTraslado}.`;
-    nuevoDiv.setAttribute("class","text-center");
+    nuevoDiv.setAttribute("class", "text-center");
     nuevoDiv.appendChild(h1);
 
     const p = document.createElement("p");
@@ -136,17 +130,17 @@ function imprimir() {
     nuevoDiv.appendChild(img);
 
     let base = document.querySelector("#vent");
-    
+
     base.innerHTML = '';
     base.appendChild(nuevoDiv);
 
- 
-    document.getElementById("vent").style.display="none";
+
+    document.getElementById("vent").style.display = "none";
     $("#vent").slideDown(800).slideUp(15000);
 }
 
 
-//Guardamos la informacion del servicio en el storage
+
 function historial() {
 
     var nombre = document.querySelector("#nombre").value;
@@ -161,31 +155,31 @@ function historial() {
     localStorage.setItem("tiempoDeEspera", tiempoDeEspera);
 
     cargarTabla();
-    
+
 }
 
 
 
-//Escuchamos el evento click del boton submit para agradecer la solicitud del servicio
+
 
 
 $("#submit").click(() =>
-$.ajax({
-    url: '../index.json',
-    success: function(respuesta) {
-        $("#vent").prepend(`${respuesta[0].mensaje}`);
-    },
-    error: function() {
-        console.log("No se ha podido obtener la información");
-    }
-}));
+    $.ajax({
+        url: '../index.json',
+        success: function (respuesta) {
+            $("#vent").prepend(`${respuesta[0].mensaje}`);
+        },
+        error: function () {
+            console.log("No se ha podido obtener la información");
+        }
+    }));
 
 
-//Se modifica el dom con los ultimos servicios
+
 function cargarTabla() {
 
-    //Inserto los datos en la tabla
-  
+
+
     var tr1 = document.createElement("tr");
     table.appendChild(tr1);
 
@@ -205,7 +199,7 @@ function cargarTabla() {
     td3.textContent = `${localStorage.getItem("tiempoDeEspera")}`;
     tr1.appendChild(td3);
 
-    let base1 = document.querySelector("#table").style.border="none";
+    let base1 = document.querySelector("#table").style.border = "none";
     $(base1).hide()
 
     $(base1).slideDown(1000);
